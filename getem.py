@@ -70,7 +70,7 @@ def early_game(board, team):
 
 def go_first():
     debug_print("Go First ", "Ran")
-    print(1, 1)
+    print("1 1")
 
 
 def go_second(board, team, enemy_team):
@@ -176,7 +176,7 @@ def place_move(cords):
     debug_print(cords[0], cords[1])
     x_cord = cords[0]
     y_cord = cords[1]
-    print('2 1')
+    print("2 1")
 
 
 def find_row_spot(list, row_num):
