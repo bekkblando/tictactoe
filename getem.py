@@ -26,6 +26,53 @@ debug_print("Your board ", board)
 # Outputting the coordinates of your board"""
 
 
+# Forsight
+def forsight(board, team, enemy_team):
+    pass
+
+
+def generate_attack(board, team, enemy_team):
+    pass
+
+
+def generate_defense(board, team, enemy_team):
+    pass
+
+
+def check_possible_moves(board, team, enemy_team):
+    left = list(get_diags(board)[0])
+    right = list(get_diags(board)[1])
+    row0 = get_row(board, 0)
+    row1 = get_row(board, 1)
+    row2 = get_row(board, 2)
+    col0 = get_col(board, 0)
+    debug_print("Col0", col0)
+    col1 = get_col(board, 1)
+    debug_print("Col1", col1)
+    col2 = get_col(board, 2)
+    debug_print("Col2", col2)
+    row_moves = []
+    for num in range(row0.count('_')):
+        row_moves.append(find_row_spot(row0, 0))
+    for num in range(row1.count('_')):
+        row_moves.append(find_row_spot(row1, 1))
+    for num in range(row2.count('_')):
+        row_moves.append(find_row_spot(row2, 2))
+    col_moves = []
+    for num in range(row1.count('_')):
+
+
+
+
+def check_forced_moves_agro(board, team, enemy_team):
+    pass
+
+
+def check_forced_moves_defense(board, team, enemy_team):
+    pass
+
+
+
 def get_col(board, which):
     answer = []
     init_list = [0 for x in range(len(board))]
