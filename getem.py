@@ -63,8 +63,10 @@ def check_if_going(board, team, enemy_team):
             return None
     go_first()
 
+
 def early_game(board, team):
-    
+    place_move(find_diag_spot(get_diags(board)[0], "left"))
+
 
 def go_first():
     debug_print("Go First ", "Ran")
@@ -103,6 +105,8 @@ def check_for_team_win(board, team):
         execute_col_win(board, team, 1)
     if col2.count(team) == 2:
         execute_col_win(board, team, 2)
+    else:
+        early_game(board, team)
 
 
 def check_for_enemy_win(board, enemy_team):
@@ -132,6 +136,7 @@ def check_for_enemy_win(board, enemy_team):
     if col2.count(team) == 2:
         execute_col_block(board, enemy_team, 2)
     else:
+        early_game(board, team)
 
 
 def execute_diag_win(board, team, side):
@@ -165,9 +170,13 @@ def execute_diag_block(board, team, side):
 
 
 def place_move(cords):
+    debug_print("Cords", cords)
+    debug_print("X Cords", type(cords[0]))
+    debug_print("Y Cords", type(cords[1]))
+    debug_print(cords[0], cords[1])
     x_cord = cords[0]
     y_cord = cords[1]
-    print(str(x_card) + str(y_cord))
+    print('2 1')
 
 
 def find_row_spot(list, row_num):
