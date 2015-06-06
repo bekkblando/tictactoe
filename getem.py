@@ -71,13 +71,18 @@ def check_if_going(board, team, enemy_team):
 
 
 def early_game(board, team):
+    random_rc = random.randint(0, 2)
     if check_empty(list(get_diags(board)[0])):
         debug_print("Diag", "ran")
         place_move(find_diag_spot(get_diags(board)[0], "left"))
-    else:
+    elif check_empty(get_row(board, random_rc)):
         debug_print("Row", "Ran")
-        random_row = random.randint(0, 2)
-        place_move(find_row_spot(get_row(board, random_row), random_row))
+        place_move(find_row_spot(get_row(board, random_rc), random_rc))
+    elif check_empty(get_col(board, random_rc)):
+        debug_print("col", "Ran")
+        place_move(find_col_spot(get_col(board, random_rc), random_rc))
+    else:
+        early_game(board, team)
 
 
 def go_first():

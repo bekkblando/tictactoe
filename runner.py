@@ -13,6 +13,8 @@ BOARD = [
 
 def is_game_over():
     if player_wins(X) or player_wins(O) or is_cat_game():
+        if is_cat_game():
+            print("Cat Game")
         return True
 
 
