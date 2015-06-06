@@ -177,6 +177,7 @@ def place_move(cords):
     x_cord = cords[0]
     y_cord = cords[1]
     print("2 1")
+    # '{} {}'.format(cords[0], cords[1])
 
 
 def find_row_spot(list, row_num):
