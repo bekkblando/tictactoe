@@ -1,5 +1,6 @@
 import sys
 import numpy
+import random
 
 
 def debug_print(whattoprint, information):
@@ -54,18 +55,29 @@ def check_team(board, team):
 
 def check_if_going(board, team, enemy_team):
     debug_print("Check if Going", "Ran")
+    counter = 0
     for item in board:
-        if item.count(team) == 0 and item.count(enemy_team) != 0:
+        if item.count(team) != 0 or item.count(enemy_team) != 0:
             debug_print("Row", item)
             debug_print("number counted team", item.count(team))
             debug_print("number counted enemy", + item.count(enemy_team))
             go_second(board, team, enemy_team)
-            return None
-    go_first()
+            return "Second"
+        counter += 1
+        debug_print("Check Counter ", counter)
+    if counter == 3:
+        go_first()
+        return "First"
 
 
 def early_game(board, team):
-    place_move(find_diag_spot(get_diags(board)[0], "left"))
+    if check_empty(list(get_diags(board)[0])):
+        debug_print("Diag", "ran")
+        place_move(find_diag_spot(get_diags(board)[0], "left"))
+    else:
+        debug_print("Row", "Ran")
+        random_row = random.randint(0, 2)
+        place_move(find_row_spot(get_row(board, random_row), random_row))
 
 
 def go_first():
@@ -76,7 +88,7 @@ def go_first():
 def go_second(board, team, enemy_team):
     debug_print("Go Second ", "Ran")
     check_for_team_win(board, team)
-    check_for_enemy_win(board, enemy_team)
+    check_for_enemy_win(board, enemy_team, team)
 
 
 def check_for_team_win(board, team):
@@ -90,26 +102,34 @@ def check_for_team_win(board, team):
     col1 = get_col(board, 1)
     col2 = get_col(board, 2)
     if left.count(team) == 2:
-        execute_diag_win(board, team, left)
-    if right.count(team) == 2:
-        execute_diag_win(board, team, right)
-    if row0.count(team) == 2:
-        execute_row_win(board, team, 0)
-    if row1.count(team) == 2:
-        execute_row_win(board, team, 1)
-    if row2.count(team) == 2:
-        execute_row_win(board, team, 2)
-    if col0.count(team) == 2:
-        execute_col_win(board, team, 0)
-    if col1.count(team) == 2:
-        execute_col_win(board, team, 1)
-    if col2.count(team) == 2:
-        execute_col_win(board, team, 2)
-    else:
-        early_game(board, team)
+        if check_empty(left):
+            debug_print("Left Win Possible", left.count(team))
+            execute_diag_win(board, team, "left")
+            return "diag_win"
+    elif right.count(team) == 2:
+        if check_empty(right):
+            execute_diag_win(board, team, "right")
+    elif row0.count(team) == 2:
+        if check_empty(row0):
+            execute_row_win(board, team, 0)
+    elif row1.count(team) == 2:
+        if check_empty(row1):
+            execute_row_win(board, team, 1)
+    elif row2.count(team) == 2:
+        if check_empty(row2):
+            execute_row_win(board, team, 2)
+    elif col0.count(team) == 2:
+        if check_empty(col0):
+            execute_col_win(board, team, 0)
+    elif col1.count(team) == 2:
+        if check_empty(col1):
+            execute_col_win(board, team, 1)
+    elif col2.count(team) == 2:
+        if check_empty(col2):
+            execute_col_win(board, team, 2)
 
 
-def check_for_enemy_win(board, enemy_team):
+def check_for_enemy_win(board, enemy_team, team):
     debug_print("Check for Enemy Team Win", "Ran")
     left = list(get_diags(board)[0])
     right = list(get_diags(board)[1])
@@ -119,35 +139,55 @@ def check_for_enemy_win(board, enemy_team):
     col0 = get_col(board, 0)
     col1 = get_col(board, 1)
     col2 = get_col(board, 2)
-    if left.count(team) == 2:
-        execute_diag_block(board, enemy_team, left)
-    if right.count(team) == 2:
-        execute_diag_block(board, enemy_team, right)
-    if row0.count(team) == 2:
-        execute_row_block(board, enemy_team, 0)
-    if row1.count(team) == 2:
-        execute_row_block(board, enemy_team, 1)
-    if row2.count(team) == 2:
-        execute_row_block(board, enemy_team, 2)
-    if col0.count(team) == 2:
-        execute_col_block(board, enemy_team, 0)
-    if col1.count(team) == 2:
-        execute_col_block(board, enemy_team, 1)
-    if col2.count(team) == 2:
-        execute_col_block(board, enemy_team, 2)
-    else:
-        early_game(board, team)
+    if left.count(enemy_team) == 2:
+        if check_empty(left):
+            debug_print("block", "Left diag")
+            execute_diag_block(board, enemy_team, "left")
+    elif right.count(enemy_team) == 2:
+        if check_empty(right):
+            debug_print("block", "right diag")
+            execute_diag_block(board, enemy_team, "right")
+    elif row0.count(enemy_team) == 2:
+        if check_empty(row0):
+            debug_print("block", "row0")
+            execute_row_block(board, enemy_team, 0)
+    elif row1.count(enemy_team) == 2:
+        if check_empty(row1):
+            debug_print("block", "row1")
+            execute_row_block(board, enemy_team, 1)
+    elif row2.count(enemy_team) == 2:
+        if check_empty(row2):
+            debug_print("block", "row2")
+            execute_row_block(board, enemy_team, 2)
+    elif col0.count(enemy_team) == 2:
+        if check_empty(col0):
+            debug_print("block", "col0")
+            execute_col_block(board, enemy_team, 0)
+    elif col1.count(enemy_team) == 2:
+        if check_empty(col1):
+            debug_print("block", "col1")
+            execute_col_block(board, enemy_team, 1)
+    elif col2.count(enemy_team) == 2:
+        if check_empty(col2):
+            debug_print("block", "col2")
+            execute_col_block(board, enemy_team, 2)
+    debug_print("Early", "Game")
+    early_game(board, team)
+    debug_print("Made", "It")
 
 
 def execute_diag_win(board, team, side):
+    debug_print("Execute diagonal", "Win")
     if side == "left":
-        place_move(find_diag_spot(get_diags(board)[0]))
+        debug_print("Left", "Win")
+        place_move(find_diag_spot(get_diags(board)[0], "left"))
     if side == "right":
-        place_move(find_diag_spot(get_diags(board)[1]))
+        debug_print("Right", "Win")
+        place_move(find_diag_spot(get_diags(board)[1], "right"))
 
 
 def execute_row_win(board, team, row_num):
-    place_move(find_row_spot(get_row(board, row), row_num))
+    place_move(find_row_spot(get_row(board, row_num), row_num))
 
 
 def execute_col_win(board, team, col_num):
@@ -155,11 +195,11 @@ def execute_col_win(board, team, col_num):
 
 
 def execute_row_block(board, team, row_num):
-    place_move(find_row_spot(get_row(board, row), row_num))
+    place_move(find_row_spot(get_row(board, row_num), row_num))
 
 
 def execute_col_block(board, team, col_num):
-    place_move(find_col_spot(get_row(board, col), col_num))
+    place_move(find_col_spot(get_row(board, col_num), col_num))
 
 
 def execute_diag_block(board, team, side):
@@ -169,6 +209,13 @@ def execute_diag_block(board, team, side):
         place_move(find_diag_spot(get_diags(board)[1]), "right")
 
 
+def check_empty(vector):
+    if vector.count('_') == 0:
+        return False
+    if vector.count('_') > 0:
+        return True
+
+
 def place_move(cords):
     debug_print("Cords", cords)
     debug_print("X Cords", type(cords[0]))
@@ -176,8 +223,8 @@ def place_move(cords):
     debug_print(cords[0], cords[1])
     x_cord = cords[0]
     y_cord = cords[1]
-    print("2 1")
-    # '{} {}'.format(cords[0], cords[1])
+    print('{} {}'.format(cords[1], cords[0]))
+    exit()
 
 
 def find_row_spot(list, row_num):
