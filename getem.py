@@ -16,6 +16,7 @@ second_row = list(second_row)
 third_row = input()
 third_row = list(third_row)
 board = [first_row, second_row, third_row]
+test_board = board
 
 # print out the inputs you're getting
 debug_print("Your Team is ", team)
@@ -51,21 +52,31 @@ def check_possible_moves(board, team, enemy_team):
     debug_print("Col1", col1)
     col2 = get_col(board, 2)
     debug_print("Col2", col2)
-    row_moves = []
+    moves = []
+    for num in range(right.count('_')):
+        moves.append(find_diag_spot(right, "right"))
+    for num in range(left.count('_')):
+        moves.append(find_diag_spot(left, "left"))
     for num in range(row0.count('_')):
-        row_moves.append(find_row_spot(row0, 0))
+        moves.append(find_row_spot(row0, 0))
     for num in range(row1.count('_')):
-        row_moves.append(find_row_spot(row1, 1))
+        moves.append(find_row_spot(row1, 1))
     for num in range(row2.count('_')):
-        row_moves.append(find_row_spot(row2, 2))
-    col_moves = []
-    for num in range(row1.count('_')):
+        moves.append(find_row_spot(row2, 2))
+    for num in range(col0.count('_')):
+        moves.append(find_col_spot(col0, 0))
+    for num in range(col1.count('_')):
+        moves.append(find_col_spot(col1, 1))
+    for num in range(col2.count('_')):
+        moves.append(find_col_spot(col2, 2))
+    debug_print("Possible Moves ", moves)
+    check_forced_moves_agro(test_board, team, enemy_team, moves)
 
 
-
-
-def check_forced_moves_agro(board, team, enemy_team):
-    pass
+def check_forced_moves_agro(test_board, team, enemy_team, moves):
+    for item in moves:
+        test_board[item[0]][item[1]] = 'X'
+        debug_print("Test Board", test_board)
 
 
 def check_forced_moves_defense(board, team, enemy_team):
@@ -108,6 +119,7 @@ def check_if_going(board, team, enemy_team):
             debug_print("Row", item)
             debug_print("number counted team", item.count(team))
             debug_print("number counted enemy", + item.count(enemy_team))
+            check_possible_moves(board, team, enemy_team)
             go_second(board, team, enemy_team)
             return "Second"
         counter += 1
