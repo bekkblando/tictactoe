@@ -63,10 +63,11 @@ class Forsight:
         return self.moves
         # self.check_forced_moves_agro(board, team, enemy_team, self.moves)
 
-    def hold_board(self):
+    def hold_org_board(self):
         return [['O', '_', 'X'],
                 ['_', '_', '_'],
                 ['_', '_', '_']]
+
 
     def check_forced_moves_agro(self, board, team, enemy_team):
         self.debug_print("Test Board", board)
@@ -75,7 +76,7 @@ class Forsight:
         for item in moves:
 
             self.debug_print("Start ", board)
-            self.board = self.hold_board()
+            self.board = self.hold_org_board()
             self.debug_print(self.board, board)
 
             self.board[item[1]][item[0]] = team
@@ -92,8 +93,8 @@ class Forsight:
                 self.debug_print("Blocked Board", self.board)
                 if self.check_for_enemy_win(board, team, enemy_team) != None:
                     new_moves = self.check_possible_moves(board, team, enemy_team)
-                        for item in new_moves:
-                            
+                    for item in new_moves:
+                        self.board[item[1]][item[0]] = team
                     self.debug_print("Winning Move", self.cord)
 
                     return self.cord
