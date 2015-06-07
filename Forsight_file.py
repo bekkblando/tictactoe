@@ -1,4 +1,54 @@
 Class Forsight:
+
+    def forsight(board, team, enemy_team):
+        pass
+
+    def generate_attack(board, team, enemy_team):
+        pass
+
+    def generate_defense(board, team, enemy_team):
+        pass
+
+    def check_possible_moves(board, team, enemy_team):
+        left = list(get_diags(board)[0])
+        right = list(get_diags(board)[1])
+        row0 = get_row(board, 0)
+        row1 = get_row(board, 1)
+        row2 = get_row(board, 2)
+        col0 = get_col(board, 0)
+        debug_print("Col0", col0)
+        col1 = get_col(board, 1)
+        debug_print("Col1", col1)
+        col2 = get_col(board, 2)
+        debug_print("Col2", col2)
+        moves = []
+        for num in range(right.count('_')):
+            moves.append(find_diag_spot(right, "right"))
+        for num in range(left.count('_')):
+            moves.append(find_diag_spot(left, "left"))
+        for num in range(row0.count('_')):
+            moves.append(find_row_spot(row0, 0))
+        for num in range(row1.count('_')):
+            moves.append(find_row_spot(row1, 1))
+        for num in range(row2.count('_')):
+            moves.append(find_row_spot(row2, 2))
+        for num in range(col0.count('_')):
+            moves.append(find_col_spot(col0, 0))
+        for num in range(col1.count('_')):
+            moves.append(find_col_spot(col1, 1))
+        for num in range(col2.count('_')):
+            moves.append(find_col_spot(col2, 2))
+        debug_print("Possible Moves ", moves)
+        check_forced_moves_agro(test_board, team, enemy_team, moves)
+
+    def check_forced_moves_agro(test_board, team, enemy_team, moves):
+        for item in moves:
+            test_board[item[0]][item[1]] = 'X'
+            debug_print("Test Board", test_board)
+
+    def check_forced_moves_defense(board, team, enemy_team):
+        pass
+
     def check_for_team_win(board, team):
         debug_print("Check for Team Win ", "Ran")
         left = list(get_diags(board)[0])
