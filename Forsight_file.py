@@ -1,5 +1,6 @@
 import numpy
 import random
+import sys
 
 
 class Forsight:
@@ -9,16 +10,16 @@ class Forsight:
              ['_', '_', '_'],
              ['_', '_', '_']]
 
-    def debug_print(whattoprint, information):
+    def debug_print(self, whattoprint, information):
         print("DEBUG: ", whattoprint, information, file=sys.stderr)
 
-    def forsight(test_board, team, enemy_team):
+    def forsight(self, test_board, team, enemy_team):
         pass
 
-    def generate_attack(test_board, team, enemy_team):
+    def generate_attack(self, test_board, team, enemy_team):
         pass
 
-    def generate_defense(board, team, enemy_team):
+    def generate_defense(self, board, team, enemy_team):
         pass
 
     def check_possible_moves(self, board, team, enemy_team):
@@ -30,81 +31,92 @@ class Forsight:
         self.col0 = self.get_col(self.board, 0)
         self.debug_print("Col0", self.col0)
         self.col1 = self.get_col(board, 1)
-        debug_print("Col1", self.col1)
+        self.debug_print("Col1", self.col1)
         self.col2 = self.get_col(board, 2)
-        debug_print("Col2", self.col2)
+        self.debug_print("Col2", self.col2)
         self.moves = []
-        for num in range(right.count('_')):
-            moves.append(find_diag_spot(right, "right"))
-        for num in range(left.count('_')):
-            moves.append(find_diag_spot(left, "left"))
-        for num in range(row0.count('_')):
-            moves.append(find_row_spot(row0, 0))
-        for num in range(row1.count('_')):
-            moves.append(find_row_spot(row1, 1))
-        for num in range(row2.count('_')):
-            moves.append(find_row_spot(row2, 2))
-        for num in range(col0.count('_')):
-            moves.append(find_col_spot(col0, 0))
-        for num in range(col1.count('_')):
-            moves.append(find_col_spot(col1, 1))
-        for num in range(col2.count('_')):
-            moves.append(find_col_spot(col2, 2))
-        debug_print("Possible Moves ", moves)
-        check_forced_moves_agro(test_board, team, enemy_team, moves)
+        for self.num in range(self.right.count('_')):
+            self.moves.append(self.find_diag_spot(self.right, "right"))
+            self.debug_print("Possible Moves Right ", self.moves)
+        for self.num in range(self.left.count('_')):
+            self.moves.append(self.find_diag_spot(self.left, "left"))
+            self.debug_print("Possible Moves Left ", self.moves)
+        for self.num in range(self.row0.count('_')):
+            self.moves.append(self.find_row_spot(self.row0, 0))
+            self.debug_print("Possible Moves Row0 ", self.moves)
+        for self.num in range(self.row1.count('_')):
+            self.moves.append(self.find_row_spot(self.row1, 1))
+            self.debug_print("Possible Moves Row1 ", self.moves)
+        for self.num in range(self.row2.count('_')):
+            self.moves.append(self.find_row_spot(self.row2, 2))
+            self.debug_print("Possible Moves row2 ", self.moves)
+        for self.num in range(self.col0.count('_')):
+            self.moves.append(self.find_col_spot(self.col0, 0))
+            self.debug_print("Possible Moves Col0 ", self.moves)
+        for self.num in range(self.col1.count('_')):
+            self.moves.append(self.find_col_spot(self.col1, 1))
+            self.debug_print("Possible Moves Col1 ", self.moves)
+        for self.num in range(self.col2.count('_')):
+            self.moves.append(self.find_col_spot(self.col2, 2))
+            self.debug_print("Possible Moves ", self.moves)
+        self.moves = filter(None, self.moves)
+        self.debug_print("Possible Moves ", self.moves)
+        self.check_forced_moves_agro(board, team, enemy_team, self.moves)
 
-    def check_forced_moves_agro(self, test_board, team, enemy_team, moves):
+    def check_forced_moves_agro(self, board, team, enemy_team, moves):
+        self.debug_print("Test Board", self.board)
         for item in moves:
-            test_board[item[0]][item[1]] = 'X'
-            debug_print("Test Board", test_board)
-            cord = check_for_team_win(test_board, team)
-            debug_print("Next Cord", cord)
+            self.board[item[0]][item[1]] = 'X'
+            self.debug_print("Test Board", self.board)
+            self.cord = self.check_for_team_win(self.board, self.team)
+            self.debug_print("Next Cord", self.cord)
+
 
     def check_forced_moves_defense(self, board, team, enemy_team):
         pass
 
     def check_for_team_win(self, board, team):
-        debug_print("Check for Team Win ", "Ran")
-        left = list(get_diags(board)[0])
-        right = list(get_diags(board)[1])
-        row0 = get_row(board, 0)
-        row1 = get_row(board, 1)
-        row2 = get_row(board, 2)
-        col0 = get_col(board, 0)
-        debug_print("Col0", col0)
-        col1 = get_col(board, 1)
-        debug_print("Col1", col1)
-        col2 = get_col(board, 2)
-        debug_print("Col2", col2)
-        if left.count(team) == 2:
-            if check_empty(left):
-                debug_print("Left Win Possible", left.count(team))
-                execute_diag_win(board, team, "left")
+        self.debug_print("Check for Team Win ", "Ran")
+        self.left = list(self.get_diags(board)[0])
+        self.right = list(self.get_diags(board)[1])
+        self.row0 = self.get_row(board, 0)
+        self.row1 = self.get_row(board, 1)
+        self.row2 = self.get_row(board, 2)
+        self.col0 = self.get_col(board, 0)
+        self.debug_print("Col0", self.col0)
+        self.col1 = self.get_col(board, 1)
+        self.debug_print("Col1", self.col1)
+        self.col2 = self.get_col(board, 2)
+        self.debug_print("Col2", self.col2)
+        if self.left.count(team) == 2:
+            if self.check_empty(left):
+                self.debug_print("Left Win Possible", self.left.count(team))
+                self.execute_diag_win(board, team, "left")
                 return "diag_win"
-        if right.count(team) == 2:
-            if check_empty(right):
-                execute_diag_win(board, team, "right")
-        if row0.count(team) == 2:
-            if check_empty(row0):
-                execute_row_win(board, team, 0)
-        if row1.count(team) == 2:
-            if check_empty(row1):
-                execute_row_win(board, team, 1)
-        if row2.count(team) == 2:
-            if check_empty(row2):
-                execute_row_win(board, team, 2)
-        if col0.count(team) == 2:
-            debug_print("win check", "col0")
-            if check_empty(col0):
-                execute_col_win(board, team, 0)
-        if col1.count(team) == 2:
-            debug_print("win check", "col1")
-            if check_empty(col1):
-                execute_col_win(board, team, 1)
-        if col2.count(team) == 2:
-            debug_print("win check", "col2")
-            if check_empty(col2):
-                execute_col_win(board, team, 2)
+        if self.right.count(team) == 2:
+            if self.check_empty(self.right):
+                self.execute_diag_win(board, team, "right")
+        if self.row0.count(team) == 2:
+            if self.check_empty(self.row0):
+                self.execute_row_win(board, team, 0)
+        if self.row1.count(team) == 2:
+            if self.check_empty(row1):
+                self.execute_row_win(board, team, 1)
+        if self.row2.count(team) == 2:
+            if self.check_empty(self.row2):
+                self.execute_row_win(board, team, 2)
+        if self.col0.count(team) == 2:
+            self.debug_print("win check", "col0")
+            if self.check_empty(self.col0):
+                self.execute_col_win(board, team, 0)
+        if self.col1.count(team) == 2:
+            self.debug_print("win check", "col1")
+            if self.check_empty(col1):
+                self.execute_col_win(board, team, 1)
+        if self.col2.count(team) == 2:
+            self.debug_print("win check", "col2")
+            if self.check_empty(col2):
+                self.execute_col_win(board, team, 2)
         else:
             return None
 
@@ -197,13 +209,34 @@ class Forsight:
         if side == "right":
             return find_diag_spot(get_diags(board)[1], "right")
 
-    def get_col(self, test_board, which):
-        answer = []
-        init_list = [0 for x in range(len(board))]
+    def find_row_spot(self, list, row_num):
+        for spot_number, spot in enumerate(list):
+            if spot == '_':
+                return (spot_number, row_num)
+
+    def find_col_spot(self, list, col_num):
+        for spot_number, spot in enumerate(list):
+            if spot == '_':
+                return(col_num, spot_number)
+
+    def find_diag_spot(self, list, side):
+        if side == "right":
+            for spot_number, spot in enumerate(list):
+                if spot == '_':
+                    if spot_number == 1:
+                        return(1, 1)
+                    if spot_number == 0:
+                        return(0, 2)
+                    if spot_number == 2:
+                        return(2, 0)
+
+    def get_col(self, board, which):
+        self.answer = []
+        self.init_list = [0 for x in range(len(board))]
         for n, num in enumerate(board):
             for number, value in enumerate(num):
-                init_list[n] = num[which]
-        return init_list
+                self.init_list[n] = num[which]
+        return self.init_list
 
     def get_row(self, board, which):
         return board[which]
