@@ -29,7 +29,7 @@ class Forsight:
         self.row1 = self.get_row(self.board, 1)
         self.row2 = self.get_row(self.board, 2)
         self.col0 = self.get_col(self.board, 0)
-        self.debug_print("Col0", self.col0)
+        # self.debug_print("Col0", self.col0)
         self.col1 = self.get_col(board, 1)
         self.debug_print("Col1", self.col1)
         self.col2 = self.get_col(board, 2)
@@ -112,7 +112,7 @@ class Forsight:
                     if not self.check_for_team_win(self.test_board, team):
                         self.debug_print("Winning Move", items)
                         return items
-
+        return "cant"
     def check_forced_moves_defense(self, board, team, enemy_team):
         pass
 
