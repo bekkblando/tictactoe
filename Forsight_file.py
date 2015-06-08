@@ -37,37 +37,34 @@ class Forsight:
         self.moves = []
         for self.num in range(self.right.count('_')):
             self.moves.append(self.find_diag_spot(self.right, "right"))
-            self.debug_print("Possible Moves Right ", self.moves)
+            # self.debug_print("Possible Moves Right ", self.moves)
         for self.num in range(self.left.count('_')):
             self.moves.append(self.find_diag_spot(self.left, "left"))
-            self.debug_print("Possible Moves Left ", self.moves)
+            # self.debug_print("Possible Moves Left ", self.moves)
         for self.num in range(self.row0.count('_')):
             self.moves.append(self.find_row_spot(self.row0, 0))
-            self.debug_print("Possible Moves Row0 ", self.moves)
+            # self.debug_print("Possible Moves Row0 ", self.moves)
         for self.num in range(self.row1.count('_')):
             self.moves.append(self.find_row_spot(self.row1, 1))
-            self.debug_print("Possible Moves Row1 ", self.moves)
+            # self.debug_print("Possible Moves Row1 ", self.moves)
         for self.num in range(self.row2.count('_')):
             self.moves.append(self.find_row_spot(self.row2, 2))
-            self.debug_print("Possible Moves row2 ", self.moves)
+            # self.debug_print("Possible Moves row2 ", self.moves)
         for self.num in range(self.col0.count('_')):
             self.moves.append(self.find_col_spot(self.col0, 0))
-            self.debug_print("Possible Moves Col0 ", self.moves)
+            # self.debug_print("Possible Moves Col0 ", self.moves)
         for self.num in range(self.col1.count('_')):
             self.moves.append(self.find_col_spot(self.col1, 1))
-            self.debug_print("Possible Moves Col1 ", self.moves)
+            # self.debug_print("Possible Moves Col1 ", self.moves)
         for self.num in range(self.col2.count('_')):
             self.moves.append(self.find_col_spot(self.col2, 2))
-            self.debug_print("Possible Moves ", self.moves)
-        self.debug_print("Possible Moves ", self.moves)
+            # self.debug_print("Possible Moves ", self.moves)
+        # self.debug_print("Possible Moves ", self.moves)
         return self.moves
         # self.check_forced_moves_agro(board, team, enemy_team, self.moves)
 
     def hold_org_board(self):
-        return [['O', '_', 'X'],
-                ['_', '_', '_'],
-                ['_', '_', '_']]
-
+        
 
     def check_forced_moves_agro(self, board, team, enemy_team):
         self.debug_print("Test Board", board)
@@ -89,17 +86,32 @@ class Forsight:
                 self.new_cord = self.check_for_enemy_win(
                     self.board, team, enemy_team)
                 self.debug_print("Block Cord", self.new_cord)
-                self.board[self.new_cord[1]][self.new_cord[0]] = enemy_team
-                self.debug_print("Blocked Board", self.board)
-                if self.check_for_enemy_win(board, team, enemy_team) != None:
-                    new_moves = self.check_possible_moves(board, team, enemy_team)
-                    for item in new_moves:
-                        self.board[item[1]][item[0]] = team
-                    self.debug_print("Winning Move", self.cord)
-
-                    return self.cord
-
-
+                try:
+                    self.board[self.new_cord[1]][self.new_cord[0]] = enemy_team
+                    self.debug_print("Blocked Board", self.board)
+                except:
+                    return "Cant"
+                # if self.check_for_enemy_win(board, team, enemy_team) != None:
+                new_moves = self.check_possible_moves(board, team, enemy_team)
+                self.debug_print("New Moves", new_moves)
+                for items in new_moves:
+                    self.test_board = self.board
+                    self.debug_print("Org Board", self.board)
+                    self.board[items[1]][items[0]] = team
+                    self.test_board = self.board
+                    self.debug_print("Test Board", self.test_board)
+                    try:
+                        self.newest_cord = self.check_for_enemy_win(
+                                self.test_board, team, enemy_team)
+                        self.debug_print("New Cord", item)
+                        self.debug_print("Block 1 Move Later", self.newest_cord)
+                        self.test_board[self.newest_cord[1]][self.newest_cord[0]] = enemy_team
+                        self.debug_print("Blocked Board 1 Move Later", self.test_board)
+                    except:
+                        self.debug_print("No need to ","Block")
+                    if not self.check_for_team_win(self.test_board, team):
+                        self.debug_print("Winning Move", items)
+                        return items
 
     def check_forced_moves_defense(self, board, team, enemy_team):
         pass
@@ -146,7 +158,7 @@ class Forsight:
             if self.check_empty(self.col2):
                 return self.execute_col_win(board, team, 2)
         else:
-            return None
+            return False
 
     def check_for_enemy_win(self, board, enemy_team, team):
         self.debug_print("Check for Enemy Team Win", "Ran")

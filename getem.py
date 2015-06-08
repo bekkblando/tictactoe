@@ -1,8 +1,8 @@
 import sys
 import numpy
 import random
-import Forsight_file
-from Forsight_file import Forsight
+# import Forsight_file
+# from Forsight_file import Forsight
 
 
 def debug_print(whattoprint, information):
@@ -76,7 +76,9 @@ def check_if_going(board, team, enemy_team):
 
 def early_game(board, team):
     random_rc = random.randint(0, 2)
-    if check_empty(list(get_diags(board)[0])):
+    if board[1][1] == '_':
+        print('1 1')
+    elif check_empty(list(get_diags(board)[0])):
         debug_print("Diag", "ran")
         place_move(find_diag_spot(get_diags(board)[0], "left"))
     elif check_empty(get_row(board, random_rc)):
