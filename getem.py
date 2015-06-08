@@ -75,12 +75,11 @@ def check_if_going(board, team, enemy_team):
 
 def early_game(board, team, enemy_team):
     random_rc = random.randint(0, 2)
-    print_debug(board[1][1])
     # see.hold_org_board(board)
-    forsee = see.check_forced_moves_agro(board, team, enemy_team)
+    """forsee = see.check_forced_moves_agro(board, team, enemy_team)
     debug_print("For see", forsee)
     if forsee != "cant":
-        place_move(forsee)
+        place_move(forsee)"""
     if board[1][1] == '_':
         debug_print("Center", "Ran")
         print('1 1')
@@ -95,9 +94,14 @@ def early_game(board, team, enemy_team):
         debug_print("col", "Ran")
         place_move(find_col_spot(get_col(board, random_rc), random_rc))
     else:
-        early_game(board, team, enemy_team)
+        debug_print("Place", "Empty")
+        place_empty(board)
 
-
+def place_empty(board):
+    for number, row in enumerate(board):
+        debug_print(number, row)
+        if check_empty(row):
+            place_move(find_row_spot(get_row(board, number), number))
 def go_first():
     debug_print("Go First ", "Ran")
     print("1 1")

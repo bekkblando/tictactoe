@@ -67,14 +67,15 @@ class Forsight:
         self.board = board
 
     def check_forced_moves_agro(self, board, team, enemy_team):
-        self.debug_print("Test Board", board)
+        board = self.board
+        self.debug_print("Test Board", self.board)
         moves = self.check_possible_moves(board, team, enemy_team)
         next_move = []
         for item in moves:
 
-            self.debug_print("Start ", board)
+            self.debug_print("Start ", self.board)
             # self.board = self.hold_org_board()
-            self.debug_print(self.board, board)
+            self.debug_print(self.board, self.board)
 
             self.board[item[1]][item[0]] = team
             self.debug_print("Test Board", self.board)
@@ -92,7 +93,7 @@ class Forsight:
                 except:
                     return "cant"
                 # if self.check_for_enemy_win(board, team, enemy_team) != None:
-                new_moves = self.check_possible_moves(board, team, enemy_team)
+                new_moves = self.check_possible_moves(self.board, team, enemy_team)
                 self.debug_print("New Moves", new_moves)
                 for items in new_moves:
                     self.test_board = self.board
