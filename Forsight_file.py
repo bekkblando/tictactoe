@@ -63,8 +63,8 @@ class Forsight:
         return self.moves
         # self.check_forced_moves_agro(board, team, enemy_team, self.moves)
 
-    def hold_org_board(self):
-        
+    def __init__(self, board):
+        self.board = board
 
     def check_forced_moves_agro(self, board, team, enemy_team):
         self.debug_print("Test Board", board)
@@ -73,7 +73,7 @@ class Forsight:
         for item in moves:
 
             self.debug_print("Start ", board)
-            self.board = self.hold_org_board()
+            # self.board = self.hold_org_board()
             self.debug_print(self.board, board)
 
             self.board[item[1]][item[0]] = team
@@ -90,7 +90,7 @@ class Forsight:
                     self.board[self.new_cord[1]][self.new_cord[0]] = enemy_team
                     self.debug_print("Blocked Board", self.board)
                 except:
-                    return "Cant"
+                    return "cant"
                 # if self.check_for_enemy_win(board, team, enemy_team) != None:
                 new_moves = self.check_possible_moves(board, team, enemy_team)
                 self.debug_print("New Moves", new_moves)
@@ -130,7 +130,7 @@ class Forsight:
         self.col2 = self.get_col(board, 2)
         self.debug_print("Col2", self.col2)
         if self.left.count(team) == 2:
-            if self.check_empty(left):
+            if self.check_empty(self.left):
                 self.debug_print("Left Win Possible", self.left.count(team))
                 return self.execute_diag_win(board, team, "left")
         if self.right.count(team) == 2:
@@ -289,6 +289,3 @@ class Forsight:
             return False
         if vector.count('_') > 0:
             return True
-
-test = Forsight()
-test.check_forced_moves_agro(test.board, test.team, test.enemy_team)

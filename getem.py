@@ -1,9 +1,8 @@
 import sys
 import numpy
 import random
-# import Forsight_file
-# from Forsight_file import Forsight
-
+import Forsight_file
+from Forsight_file import Forsight
 
 def debug_print(whattoprint, information):
     print("DEBUG: ", whattoprint, information, file=sys.stderr)
@@ -19,7 +18,7 @@ third_row = input()
 third_row = list(third_row)
 board = [first_row, second_row, third_row]
 test_board = board
-
+see = Forsight(board)
 # print out the inputs you're getting
 debug_print("Your Team is ", team)
 debug_print("Your First row ", first_row)
@@ -74,9 +73,14 @@ def check_if_going(board, team, enemy_team):
         return "First"
 
 
-def early_game(board, team):
+def early_game(board, team, enemy_team):
     random_rc = random.randint(0, 2)
-    if board[1][1] == '_':
+    # see.hold_org_board(board)
+    forsee = see.check_forced_moves_agro(board, team, enemy_team)
+    debug_print("For see", forsee)
+    if forsee != "cant":
+        place_move(forsee)
+    elif board[1][1] == '_':
         print('1 1')
     elif check_empty(list(get_diags(board)[0])):
         debug_print("Diag", "ran")
@@ -205,7 +209,7 @@ def check_for_enemy_win(board, enemy_team, team):
             execute_col_block(board, enemy_team, 2)
             return("Col2")
     debug_print("Early", "Game")
-    early_game(board, team)
+    early_game(board, team, enemy_team)
     debug_print("Made", "It")
 
 
