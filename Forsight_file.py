@@ -1,14 +1,15 @@
 import numpy
 import random
 import sys
+import copy
 
 
 class Forsight:
     team = 'X'
     enemy_team = 'O'
-    board = [['O', '_', 'X'],
-             ['_', '_', '_'],
-             ['_', '_', '_']]
+    # board = [['O', '_', 'X'],
+            # ['_', '_', '_'],
+            # ['_', '_', '_']]
 
     def debug_print(self, whattoprint, information):
         print("DEBUG: ", whattoprint, information, file=sys.stderr)
@@ -64,7 +65,7 @@ class Forsight:
         # self.check_forced_moves_agro(board, team, enemy_team, self.moves)
 
     def __init__(self, board):
-        self.board = board
+        self.board = copy.deepcopy(board)
 
     def check_forced_moves_agro(self, board, team, enemy_team):
         board = self.board

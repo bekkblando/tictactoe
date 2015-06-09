@@ -17,7 +17,7 @@ second_row = list(second_row)
 third_row = input()
 third_row = list(third_row)
 board = [first_row, second_row, third_row]
-test_board = board
+# test_board = board
 see = Forsight(board)
 # print out the inputs you're getting
 debug_print("Your Team is ", team)
@@ -76,10 +76,10 @@ def check_if_going(board, team, enemy_team):
 def early_game(board, team, enemy_team):
     random_rc = random.randint(0, 2)
     # see.hold_org_board(board)
-    """forsee = see.check_forced_moves_agro(board, team, enemy_team)
+    forsee = see.check_forced_moves_agro(board, team, enemy_team)
     debug_print("For see", forsee)
     if forsee != "cant":
-        place_move(forsee)"""
+        place_move(forsee)
     if board[1][1] == '_':
         debug_print("Center", "Ran")
         print('1 1')
